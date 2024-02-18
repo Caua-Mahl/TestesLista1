@@ -2,8 +2,6 @@
 
 namespace src;
 
-use function PHPUnit\Framework\isEmpty;
-
 class ListaNumerica
 {
     public static function somarElementos(array $array): int
