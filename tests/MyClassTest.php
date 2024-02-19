@@ -37,7 +37,7 @@ class MyClassTest extends TestCase
     {
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->setMockClassName('MinhaClasseMock')
-                        ->setConstructorArgs([new BancoDeDados, new Aluno])
+                        ->disableOriginalConstructor()
                         ->getMock();
 
         $this->assertEquals('MinhaClasseMock', get_class($myClass));
@@ -111,30 +111,45 @@ class MyClassTest extends TestCase
 _________________________________________________________________________________________________________________________________________
     1 - testAddMethods:
         Teste para ver se os métodos são adicionados com assertTrue e method_exists.
-        O addMethods não está funcionando na versão do phpunit que estou usando.
+        O addMethods não está funcionando na versão do phpunit que estou usando. 
+        AssertTrue para ver se o method_exist retorna verdadeiro, usei o disableOriginalConstructor para abstrair a passagem das classes nos parâmetros.
 _________________________________________________________________________________________________________________________________________
     2- testSetConstructorArgs:
         Teste para ver se os arguentos do construtor do mock são corretamente setados com setConstructorArgs.
+        AssertIsObject para ver se o objeto foi criado.
 _________________________________________________________________________________________________________________________________________
     3- testSetMockClassName:
         Teste para ver se o nome do mock é corretamente setado com setMockClassName.
+        AssertEquals para verificar se o nome atual é o mesmo que o nome que setei, usei o disableOriginalConstructor para abstrair a passagem das classes nos parâmetros.
+
 _________________________________________________________________________________________________________________________________________
     4- testDisableOriginalConstructor:
         Teste para ver se o construtor do mock é devidamente desativado com disableOriginalConstructor.
+        AssertIsObject para ver se o objeto foi criado sem precisar passar parâmetros.
+
 _________________________________________________________________________________________________________________________________________
     5- testDisableOriginalClone:
         Teste para ver se o clone do mock é devidamente desativado disableOriginalClone.
+        AssertIsObject para ver se o objeto foi criado, usei o disableOriginalConstructor para abstrair a passagem das classes nos parâmetros.
+
 _________________________________________________________________________________________________________________________________________
     6- testDisableAutoload:
         Teste para ver se o autoload do mock é devidamente desativado com ->disableAutoload(), o autoload atualmente está obsoleto na versão de phpunit que estou usando.
+        AssertIsObject para ver se o objeto foi criado, usei o disableOriginalConstructor para abstrair a passagem das classes nos parâmetros.
+
 _________________________________________________________________________________________________________________________________________
     7- testMethodWillReturnAprovado:
         Teste para ver se o método vai retornar o "Aprovado" com willReturn.
+        AssertEquals para ver se o retorno é o mesmo que eu declarei no willReturn
 _________________________________________________________________________________________________________________________________________
     8- testMethodWillReturnReprovado:
         Teste para ver se o método vai retornar o "Repovado" com willReturn.
+        AssertEquals para ver se o retorno é o mesmo que eu declarei no willReturn
+
 _________________________________________________________________________________________________________________________________________
     9- testMethodReturnSelf:
         Teste para ver se o método irá retornar o próprio objeto com willReturnSelf.
+        AssertEquals para ver se o retorno é ele mesmo
+
 _________________________________________________________________________________________________________________________________________
 */
