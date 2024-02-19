@@ -1,0 +1,77 @@
+    /*
+    public function testPassarDeAnoAprovado()
+    {
+        $bancoDeDados = $this->createMock(BancoDeDados::class);
+        $aluno        = $this->createMock(Aluno::class);
+        $myClass      = new MyClass($bancoDeDados, $aluno);
+
+        $bancoDeDados->method('puxarNotas')->willReturn([5, 6, 7, 8, 9]);
+        $aluno->method('getId')->willReturn(1);
+
+        $this->assertEquals('Aprovado', $myClass->passarDeAno());
+    }
+
+    public function testPassarDeAnoReprovado()
+    {
+        $bancoDeDados = $this->createMock(BancoDeDados::class);
+        $aluno        = $this->createMock(Aluno::class);
+        $myClass      = new MyClass($bancoDeDados, $aluno);
+
+        $bancoDeDados->method('puxarNotas')->willReturn([5, 6, 6, 6, 6]);
+        $aluno->method('getId')->willReturn(1);
+
+        $this->assertEquals('Reprovado', $myClass->passarDeAno());
+    } */
+
+<?php 
+
+namespace src;
+
+class Aluno
+{
+    private int $id;
+
+    public function __construct(int $id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+}
+
+
+
+<?php 
+
+namespace src;
+
+use Exception;
+
+class BancoDeDados
+{
+    private static $conn;
+    public function puxarNotas(int $id): array
+    {
+        try 
+        {
+            $comando_sql = "SELECT notas FROM alunos WHERE id = $1";
+            $resultado   = pg_query_params(self::$conn, $comando_sql, (array) $id);
+
+            return pg_fetch_assoc($resultado);
+
+        } 
+        catch (Exception $e) 
+        {
+            echo "Não foi possível retornar as notas desse aluno do banco: " . $e->getMessage();
+        }        
+
+    }
+}
+
+
+
+
+
