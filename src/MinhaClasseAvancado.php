@@ -9,7 +9,7 @@ class MinhaClasseAvancado{
       try 
       {
         if (empty($numeros)) {
-          throw new \Exception('Array vazia');
+          throw new \Exception('Array não deve ser vazia');
         }
 
         if (in_array(false, array_map('is_numeric', $numeros))) {
@@ -32,7 +32,7 @@ class MinhaClasseAvancado{
       }
     }
 
-    public static function subtrair($a, $b) : int|float|string
+    public static function subtrair($a, $b = 0) : int|float|string
     {
         try
         {

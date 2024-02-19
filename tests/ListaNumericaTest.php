@@ -20,14 +20,16 @@ class ListaNumericaTest extends TestCase
 
     public function testEncontrarMaiorElemento()
     {
-        $this->assertGreaterThan(1,   ListaNumerica::encontrarMaiorElemento([-1,0,2]),   'Não retorna maior valor');
+        $this->assertEquals(5,        ListaNumerica::encontrarMaiorElemento([3,4,5]),    'Não retorna maior valor');
+        $this->assertGreaterThan(1,   ListaNumerica::encontrarMaiorElemento([-1,0,2]),   'Não retorna maior valor ao misturar negativo com positivo e zero');
         $this->assertFalse(           ListaNumerica::encontrarMaiorElemento([]),         'Não retorna falso ao receber array vazia');
         $this->assertIsInt(           ListaNumerica::encontrarMaiorElemento([-1,0,2]),   'Não devolve inteiro em array com números');
     }
 
     public function testEncontrarMenorElemento()
     {
-        $this->assertLessThan(0,      ListaNumerica::encontrarMenorElemento([-1,0,2]),   'Não retorna menor valor');
+        $this->assertEquals(3,        ListaNumerica::encontrarMenorElemento([3,4,5]),    'Não retorna menor valor');
+        $this->assertLessThan(0,      ListaNumerica::encontrarMenorElemento([-1,0,2]),   'Não retorna menor valor ao misturar negativo com positivo e zero');
         $this->assertFalse(           ListaNumerica::encontrarMenorElemento([]),         'Não retorna falso ao receber array vazia');
         $this->assertIsInt(           ListaNumerica::encontrarMenorElemento([-1,0,2]),   'Não devolve inteiro em array com números');
     }

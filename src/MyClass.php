@@ -4,33 +4,33 @@ namespace src;
 
 class MyClass
 {
-    public int $a;
-    public int $b;
+    public int $api;
+    public int $api2;
 
-    public function __construct(int $a=0, int $b=0)
+    public function __construct(int $api=0, int $api2=0)
     {
-        $this->a = $a;
-        $this->b = $b;
+        $this->api = $api;
+        $this->api2 = $api2;
     }
 
-    public function somar(int $a, int $b): int|float|string
+    public function somar(int $api, int $api2): int|float|string
     {
         try 
         {
-            if (!is_numeric($a) || !is_numeric($b))
+            if (!is_numeric($api) || !is_numeric($api2))
             {
                throw new \Exception('Apenas números são permitidos');
            }
    
-           if (is_string($a) || is_string($b)) {
+           if (is_string($api) || is_string($api2)) {
                throw new \Exception('Apenas números são permitidos');
            }
    
-           if (is_float($a) || is_float($b)) {
-               return floatval(number_format($a + $b, 2));
+           if (is_float($api) || is_float($api2)) {
+               return floatval(number_format($api + $api2, 2));
            }
    
-           return $a + $b;
+           return $api + $api2;
         } 
         catch (\Exception $e) 
         {
@@ -38,24 +38,24 @@ class MyClass
         }
     }
 
-    public function subtrair($a, $b) : int|float|string
+    public function subtrair($api, $api2) : int|float|string
     {
         try
         {
-            if (!is_numeric($a) || !is_numeric($b))
+            if (!is_numeric($api) || !is_numeric($api2))
             {
                throw new \Exception('Apenas números são permitidos');
            }
    
-           if (is_string($a) || is_string($b)) {
+           if (is_string($api) || is_string($api2)) {
                throw new \Exception('Apenas números são permitidos');
            }
    
-           if (is_float($a) || is_float($b)) {
-               return floatval(number_format($a - $b, 2));
+           if (is_float($api) || is_float($api2)) {
+               return floatval(number_format($api - $api2, 2));
            }
    
-           return $a - $b;
+           return $api - $api2;
         }
         catch (\Exception $e)
         {
@@ -68,14 +68,14 @@ class MyClass
         return $this;
     }
 
-    public function getA(): int
+    public function getApi(): int
     {
-        return $this->a;
+        return $this->api;
     }
 
-    public function getB(): int
+    public function getApi2(): int
     {
-        return $this->b;
+        return $this->api2;
     }
 
       /* private object $bancoDeDados;

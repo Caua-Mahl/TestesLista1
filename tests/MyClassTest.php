@@ -12,10 +12,13 @@ class MyClassTest extends TestCase
     {
          //      ->addMethods(['somar', 'subtrair'])
         $myClass = $this->createMock(MyClass::class);
+
         $myClass->expects($this->any())
                 ->method('somar');
+
         $myClass->expects($this->any())
                 ->method('subtrair');
+
         $this->assertTrue(method_exists($myClass, 'subtrair'));
         $this->assertTrue(method_exists($myClass, 'somar'));
 
@@ -26,8 +29,9 @@ class MyClassTest extends TestCase
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->setConstructorArgs([2, 3])
                         ->getMock();
-        $this->assertEquals(2, $myClass->a);
-        $this->assertEquals(3, $myClass->b);
+
+        $this->assertEquals(2, $myClass->api);
+        $this->assertEquals(3, $myClass->api2);
     }
 
     public function testSetMockClassName()
@@ -35,6 +39,7 @@ class MyClassTest extends TestCase
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->setMockClassName('MinhaClasseMock')
                         ->getMock();
+
         $this->assertEquals('MinhaClasseMock', get_class($myClass));
     }
 
@@ -43,6 +48,7 @@ class MyClassTest extends TestCase
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->disableOriginalConstructor()
                         ->getMock();
+
         $this->assertIsObject($myClass);
     }
 
@@ -51,6 +57,7 @@ class MyClassTest extends TestCase
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->disableOriginalClone()
                         ->getMock();
+
         $this->assertIsObject($myClass);
     }
 
@@ -59,18 +66,22 @@ class MyClassTest extends TestCase
         $myClass = $this->getMockBuilder(MyClass::class)
                     //  ->disableAutoload()
                         ->getMock();
+                        
         $this->assertIsObject($myClass);
     }
 
     public function testMethodWillReturn()
     {
         $myClass = $this->createMock(MyClass::class);
+
         $myClass->expects($this->any())
                 ->method('somar')
                 ->willReturn(1);
+
         $myClass->expects($this->any())
                 ->method('subtrair')
                 ->willReturn(1);
+
         $this->assertEquals(1, $myClass->somar(1, 1));
         $this->assertEquals(1, $myClass->subtrair(1, 1));
     }
@@ -78,6 +89,7 @@ class MyClassTest extends TestCase
     public function testMethodReturnSelf()
     {
         $myClass = $this->createMock(MyClass::class);
+
         $myClass->expects($this->any())
                 ->method('retornaEleMesmo')
                 ->willReturnSelf();
@@ -90,18 +102,18 @@ class MyClassTest extends TestCase
 
     testAddMethods = Teste para ver se os métodos são adicionados com assertTrue e method_exists. O addMethods não está funcionando na versão do phpunit que estou usando.
 
-    testSetConstructorArgs = Teste para ver se os arguentos do construtor do mock são corretamente setados
+    testSetConstructorArgs = Teste para ver se os arguentos do construtor do mock são corretamente setados com setConstructorArgs.
 
-    testSetMockClassName = Teste para ver se o nome do mock é corretamente setado
+    testSetMockClassName = Teste para ver se o nome do mock é corretamente setado com setMockClassName.
 
-    testDisableOriginalConstructor = Teste para ver se o construtor do mock é devidamente desativado
+    testDisableOriginalConstructor = Teste para ver se o construtor do mock é devidamente desativado com disableOriginalConstructor.
 
-    testDisableOriginalClone = Teste para ver se o clone do mock é devidamente desativado
+    testDisableOriginalClone = Teste para ver se o clone do mock é devidamente desativado disableOriginalClone.
 
-    testDisableAutoload = Teste para ver se o autoload do mock é devidamente desativado, o autoload atualmente está obsoleto na versão de phpunit que estou usando
+    testDisableAutoload = Teste para ver se o autoload do mock é devidamente desativado com ->disableAutoload(), o autoload atualmente está obsoleto na versão de phpunit que estou usando.
 
-    testMethodWillReturn = Teste para ver se os método irão retornar o valor esperado
+    testMethodWillReturn = Teste para ver se os método irão retornar o valor esperado com willReturn.
 
-    testMethodReturnSelf = Teste para ver se o método irá retornar o próprio objeto
+    testMethodReturnSelf = Teste para ver se o método irá retornar o próprio objeto com willReturnSelf.
 
 */
