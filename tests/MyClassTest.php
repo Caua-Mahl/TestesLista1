@@ -1,35 +1,34 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use src\Aluno;
 use src\BancoDeDados;
 use src\MyClass;
 
-require_once "src/ClassesDB/BancoDeDados.php";
-require_once "src/ClassesDB/Aluno.php";
+require_once "src/ClassesMock/BancoDeDados.php";
 require_once "src/MyClass.php";
 
 class MyClassTest extends TestCase
-{
-    public function testAddMethods()
+{public function testAddMethods()
     {
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->disableOriginalConstructor()
+                        ->onlyMethods(['passarDeAno'])
                     //  ->addMethods(['passarDeAno'])
                         ->getMock();
-
+    
         $this->assertTrue(method_exists($myClass, 'passarDeAno'));
     }
 
     public function testSetConstructorArgs() 
     {
         $bancoDeDados = $this->createMock(BancoDeDados::class);
-        $aluno        = $this->createMock(Aluno::class);
         $myClass      = $this->getMockBuilder(MyClass::class)
-                             ->setConstructorArgs([$bancoDeDados, $aluno])
+                             ->setConstructorArgs([$bancoDeDados, 1])
                              ->getMock();
         
         $this->assertIsObject($myClass);
+        $this->assertEquals(1, $myClass->id);
+        $this->assertInstanceOf(BancoDeDados::class, $myClass->bancoDeDados);
     }
 
 
@@ -54,22 +53,27 @@ class MyClassTest extends TestCase
 
     public function testDisableOriginalClone()
     {
-        $myClass = $this->getMockBuilder(MyClass::class)
-                        ->disableOriginalClone()
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $bancoDeDados = $this->createMock(BancoDeDados::class);
+        $myClass      = $this->getMockBuilder(MyClass::class)
+                             ->setConstructorArgs([$bancoDeDados, 1])
+                             ->disableOriginalClone()
+                             ->getMock();
 
-        $this->assertIsObject($myClass);
-    }
+        $myClassClone = clone $myClass;
+
+        $this->assertIsObject($myClassClone);
+        $this->assertEquals(1, $myClassClone->id);
+    }    
 
     public function testDisableAutoload()
     {
-        $myClass = $this->getMockBuilder(MyClass::class)
-                     // ->disableAutoload()
-                        ->disableOriginalConstructor()
-                        ->getMock();
-                        
+        $myClass= $this->getMockBuilder(MyClass::class)
+                    // ->disableAutoload()
+                       ->disableOriginalConstructor()
+                       ->getMock();
+            
         $this->assertIsObject($myClass);
+
     }
 
     public function testMethodWillReturnAprovado()

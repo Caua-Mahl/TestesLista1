@@ -2,29 +2,6 @@
 
 All notable changes of the PHPUnit 11.0 release series are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [11.0.3] - 2024-02-10
-
-### Changed
-
-* Tests that do not unregister their error handlers or exception handlers are no longer considered risky when they are run in an isolated process
-
-### Fixed
-
-* When a test (or the code called from it) does not unregister its own error handlers and its own exception handlers then only the latter was reported
-* Resource usage information is printed when the `--debug` CLI option is used
-
-## [11.0.2] - 2024-04-04
-
-### Fixed
-
-* [#5692](https://github.com/sebastianbergmann/phpunit/issues/5692): `--log-events-text` and `--log-events-verbose-text` require the destination file to exit
-
-## [11.0.1] - 2024-02-02
-
-### Fixed
-
-* [#5690](https://github.com/sebastianbergmann/phpunit/issues/5690): Backward Compatibility break in `PHPUnit\Framework\Constraint\Constraint`
-
 ## [11.0.0] - 2024-02-02
 
 ### Added
@@ -97,7 +74,4 @@ All notable changes of the PHPUnit 11.0 release series are documented in this fi
 * `PHPUnit\TextUI\Configuration\Configuration::registerMockObjectsFromTestArgumentsRecursively()`
 * `PHPUnit\Framework\Constraint\Constraint::exporter()`
 
-[11.0.3]: https://github.com/sebastianbergmann/phpunit/compare/11.0.2...11.0.3
-[11.0.2]: https://github.com/sebastianbergmann/phpunit/compare/11.0.1...11.0.2
-[11.0.1]: https://github.com/sebastianbergmann/phpunit/compare/11.0.0...11.0.1
 [11.0.0]: https://github.com/sebastianbergmann/phpunit/compare/10.5...11.0.0

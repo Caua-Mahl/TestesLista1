@@ -16,9 +16,9 @@ class ComposerStaticInit767e26d82f410d87c921765d04964096
         array (
             'PhpParser\\' => 10,
         ),
-        'I' => 
+        'M' => 
         array (
-            'Imply\\TestesLista1\\' => 19,
+            'Mycompany\\MyPackage\\' => 20,
         ),
         'D' => 
         array (
@@ -31,7 +31,7 @@ class ComposerStaticInit767e26d82f410d87c921765d04964096
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
-        'Imply\\TestesLista1\\' => 
+        'Mycompany\\MyPackage\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

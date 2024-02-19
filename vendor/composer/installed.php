@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'imply/testes-lista1',
+        'name' => 'mycompany/my-package',
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
         'reference' => null,
@@ -10,21 +10,21 @@
         'dev' => true,
     ),
     'versions' => array(
-        'imply/testes-lista1' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'myclabs/deep-copy' => array(
             'pretty_version' => '1.11.1',
             'version' => '1.11.1.0',
             'reference' => '7284c22080590fb39f2ffa3e9057f10a4ddd0e0c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../myclabs/deep-copy',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'mycompany/my-package' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -101,9 +101,9 @@
             'dev_requirement' => false,
         ),
         'phpunit/phpunit' => array(
-            'pretty_version' => '11.0.3',
-            'version' => '11.0.3.0',
-            'reference' => 'de24e7e7c67fbf437f7b6cd7bc919f2dc6fd89d4',
+            'pretty_version' => '11.0.0',
+            'version' => '11.0.0.0',
+            'reference' => 'ece3536c22fc5113906a42e7e82de00baaef36d0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(),

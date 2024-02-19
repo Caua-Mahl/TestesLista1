@@ -1,21 +1,24 @@
 <?php 
 
 namespace src;
+use src\BancoDeDados;
+require_once "src/ClassesMock/BancoDeDados.php";
 
 class MyClass
 {
     public object $bancoDeDados;
-    public object $aluno;
+    public int $id;
+    public string $autoload;
 
-   public function __construct(BancoDeDados $bancoDeDados, Aluno $aluno)
+   public function __construct(BancoDeDados $bancoDeDados,int $id)
    {
         $this->bancoDeDados = $bancoDeDados;
-        $this->aluno = $aluno;
+        $this->id = $id;
    }
 
    public function passarDeAno()
     {
-        $notas = $this->bancoDeDados->puxarNotas($this->aluno->getId());
+        $notas = $this->bancoDeDados->puxarNotas($this->id);
 
         if (array_sum($notas) / count($notas) < 7)
         {
@@ -25,4 +28,8 @@ class MyClass
         return "Aprovado";
     } 
 
+    public function __clone()
+    {
+        $this->id = 2;
+    }
 } 
