@@ -1,43 +1,43 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
+use src\Aluno;
+use src\BancoDeDados;
 use src\MyClass;
 
+require_once "src/ClassesDB/BancoDeDados.php";
+require_once "src/ClassesDB/Aluno.php";
 require_once "src/MyClass.php";
 
 class MyClassTest extends TestCase
 {
-
     public function testAddMethods()
     {
-         //      ->addMethods(['somar', 'subtrair'])
-        $myClass = $this->createMock(MyClass::class);
+        $myClass = $this->getMockBuilder(MyClass::class)
+                        ->disableOriginalConstructor()
+                    //  ->addMethods(['passarDeAno'])
+                        ->getMock();
 
-        $myClass->expects($this->any())
-                ->method('somar');
-
-        $myClass->expects($this->any())
-                ->method('subtrair');
-
-        $this->assertTrue(method_exists($myClass, 'subtrair'));
-        $this->assertTrue(method_exists($myClass, 'somar'));
-
+        $this->assertTrue(method_exists($myClass, 'passarDeAno'));
     }
 
     public function testSetConstructorArgs() 
     {
-        $myClass = $this->getMockBuilder(MyClass::class)
-                        ->setConstructorArgs([2, 3])
-                        ->getMock();
-
-        $this->assertEquals(2, $myClass->api);
-        $this->assertEquals(3, $myClass->api2);
+        $bancoDeDados = $this->createMock(BancoDeDados::class);
+        $aluno        = $this->createMock(Aluno::class);
+        $myClass      = $this->getMockBuilder(MyClass::class)
+                             ->setConstructorArgs([$bancoDeDados, $aluno])
+                             ->getMock();
+        
+        $this->assertIsObject($myClass);
     }
+
 
     public function testSetMockClassName()
     {
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->setMockClassName('MinhaClasseMock')
+                        ->setConstructorArgs([new BancoDeDados, new Aluno])
                         ->getMock();
 
         $this->assertEquals('MinhaClasseMock', get_class($myClass));
@@ -56,6 +56,7 @@ class MyClassTest extends TestCase
     {
         $myClass = $this->getMockBuilder(MyClass::class)
                         ->disableOriginalClone()
+                        ->disableOriginalConstructor()
                         ->getMock();
 
         $this->assertIsObject($myClass);
@@ -64,26 +65,33 @@ class MyClassTest extends TestCase
     public function testDisableAutoload()
     {
         $myClass = $this->getMockBuilder(MyClass::class)
-                    //  ->disableAutoload()
+                     // ->disableAutoload()
+                        ->disableOriginalConstructor()
                         ->getMock();
                         
         $this->assertIsObject($myClass);
     }
 
-    public function testMethodWillReturn()
+    public function testMethodWillReturnAprovado()
     {
         $myClass = $this->createMock(MyClass::class);
 
         $myClass->expects($this->any())
-                ->method('somar')
-                ->willReturn(1);
+                ->method('passarDeAno')
+                ->willReturn('Aprovado');
+
+        $this->assertEquals('Aprovado', $myClass->passarDeAno());
+    }
+
+    public function testMethodWillReturnReprovado()
+    {
+        $myClass = $this->createMock(MyClass::class);
 
         $myClass->expects($this->any())
-                ->method('subtrair')
-                ->willReturn(1);
+                ->method('passarDeAno')
+                ->willReturn('Reprovado');
 
-        $this->assertEquals(1, $myClass->somar(1, 1));
-        $this->assertEquals(1, $myClass->subtrair(1, 1));
+        $this->assertEquals('Reprovado', $myClass->passarDeAno());
     }
 
     public function testMethodReturnSelf()
@@ -91,29 +99,42 @@ class MyClassTest extends TestCase
         $myClass = $this->createMock(MyClass::class);
 
         $myClass->expects($this->any())
-                ->method('retornaEleMesmo')
+                ->method('passarDeAno')
                 ->willReturnSelf();
 
-        $this->assertEquals($myClass, $myClass->retornaEleMesmo());
+        $this->assertEquals($myClass, $myClass->passarDeAno());
     }
 }
 
 /*
-
-    testAddMethods = Teste para ver se os métodos são adicionados com assertTrue e method_exists. O addMethods não está funcionando na versão do phpunit que estou usando.
-
-    testSetConstructorArgs = Teste para ver se os arguentos do construtor do mock são corretamente setados com setConstructorArgs.
-
-    testSetMockClassName = Teste para ver se o nome do mock é corretamente setado com setMockClassName.
-
-    testDisableOriginalConstructor = Teste para ver se o construtor do mock é devidamente desativado com disableOriginalConstructor.
-
-    testDisableOriginalClone = Teste para ver se o clone do mock é devidamente desativado disableOriginalClone.
-
-    testDisableAutoload = Teste para ver se o autoload do mock é devidamente desativado com ->disableAutoload(), o autoload atualmente está obsoleto na versão de phpunit que estou usando.
-
-    testMethodWillReturn = Teste para ver se os método irão retornar o valor esperado com willReturn.
-
-    testMethodReturnSelf = Teste para ver se o método irá retornar o próprio objeto com willReturnSelf.
-
+    DOCUMENTAÇÃO DOS TESTES REALIZADOS:
+_________________________________________________________________________________________________________________________________________
+    1 - testAddMethods:
+        Teste para ver se os métodos são adicionados com assertTrue e method_exists.
+        O addMethods não está funcionando na versão do phpunit que estou usando.
+_________________________________________________________________________________________________________________________________________
+    2- testSetConstructorArgs:
+        Teste para ver se os arguentos do construtor do mock são corretamente setados com setConstructorArgs.
+_________________________________________________________________________________________________________________________________________
+    3- testSetMockClassName:
+        Teste para ver se o nome do mock é corretamente setado com setMockClassName.
+_________________________________________________________________________________________________________________________________________
+    4- testDisableOriginalConstructor:
+        Teste para ver se o construtor do mock é devidamente desativado com disableOriginalConstructor.
+_________________________________________________________________________________________________________________________________________
+    5- testDisableOriginalClone:
+        Teste para ver se o clone do mock é devidamente desativado disableOriginalClone.
+_________________________________________________________________________________________________________________________________________
+    6- testDisableAutoload:
+        Teste para ver se o autoload do mock é devidamente desativado com ->disableAutoload(), o autoload atualmente está obsoleto na versão de phpunit que estou usando.
+_________________________________________________________________________________________________________________________________________
+    7- testMethodWillReturnAprovado:
+        Teste para ver se o método vai retornar o "Aprovado" com willReturn.
+_________________________________________________________________________________________________________________________________________
+    8- testMethodWillReturnReprovado:
+        Teste para ver se o método vai retornar o "Repovado" com willReturn.
+_________________________________________________________________________________________________________________________________________
+    9- testMethodReturnSelf:
+        Teste para ver se o método irá retornar o próprio objeto com willReturnSelf.
+_________________________________________________________________________________________________________________________________________
 */

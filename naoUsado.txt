@@ -1,77 +1,202 @@
-    /*
-    public function testPassarDeAnoAprovado()
-    {
-        $bancoDeDados = $this->createMock(BancoDeDados::class);
-        $aluno        = $this->createMock(Aluno::class);
-        $myClass      = new MyClass($bancoDeDados, $aluno);
-
-        $bancoDeDados->method('puxarNotas')->willReturn([5, 6, 7, 8, 9]);
-        $aluno->method('getId')->willReturn(1);
-
-        $this->assertEquals('Aprovado', $myClass->passarDeAno());
-    }
-
-    public function testPassarDeAnoReprovado()
-    {
-        $bancoDeDados = $this->createMock(BancoDeDados::class);
-        $aluno        = $this->createMock(Aluno::class);
-        $myClass      = new MyClass($bancoDeDados, $aluno);
-
-        $bancoDeDados->method('puxarNotas')->willReturn([5, 6, 6, 6, 6]);
-        $aluno->method('getId')->willReturn(1);
-
-        $this->assertEquals('Reprovado', $myClass->passarDeAno());
-    } */
-
 <?php 
 
-namespace src;
+use PHPUnit\Framework\TestCase;
+use src\MyClass;
 
-class Aluno
+require_once "src/MyClass.php";
+
+class MyClassTest extends TestCase
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function testAddMethods()
     {
-        $this->id = $id;
+         //      ->addMethods(['somar', 'subtrair'])
+        $myClass = $this->createMock(MyClass::class);
+
+        $myClass->expects($this->any())
+                ->method('somar');
+
+        $myClass->expects($this->any())
+                ->method('subtrair');
+
+        $this->assertTrue(method_exists($myClass, 'subtrair'));
+        $this->assertTrue(method_exists($myClass, 'somar'));
+
     }
 
-    public function getId(): int
+    public function testSetConstructorArgs() 
     {
-        return $this->id;
+        $myClass = $this->getMockBuilder(MyClass::class)
+                        ->setConstructorArgs([2, 3])
+                        ->getMock();
+
+        $this->assertEquals(2, $myClass->api);
+        $this->assertEquals(3, $myClass->api2);
+    }
+
+    public function testSetMockClassName()
+    {
+        $myClass = $this->getMockBuilder(MyClass::class)
+                        ->setMockClassName('MinhaClasseMock')
+                        ->getMock();
+
+        $this->assertEquals('MinhaClasseMock', get_class($myClass));
+    }
+
+    public function testDisableOriginalConstructor()
+    {
+        $myClass = $this->getMockBuilder(MyClass::class)
+                        ->disableOriginalConstructor()
+                        ->getMock();
+
+        $this->assertIsObject($myClass);
+    }
+
+    public function testDisableOriginalClone()
+    {
+        $myClass = $this->getMockBuilder(MyClass::class)
+                        ->disableOriginalClone()
+                        ->getMock();
+
+        $this->assertIsObject($myClass);
+    }
+
+    public function testDisableAutoload()
+    {
+        $myClass = $this->getMockBuilder(MyClass::class)
+                    //  ->disableAutoload()
+                        ->getMock();
+                        
+        $this->assertIsObject($myClass);
+    }
+
+    public function testMethodWillReturn()
+    {
+        $myClass = $this->createMock(MyClass::class);
+
+        $myClass->expects($this->any())
+                ->method('somar')
+                ->willReturn(1);
+
+        $myClass->expects($this->any())
+                ->method('subtrair')
+                ->willReturn(1);
+
+        $this->assertEquals(1, $myClass->somar(1, 1));
+        $this->assertEquals(1, $myClass->subtrair(1, 1));
+    }
+
+    public function testMethodReturnSelf()
+    {
+        $myClass = $this->createMock(MyClass::class);
+
+        $myClass->expects($this->any())
+                ->method('retornaEleMesmo')
+                ->willReturnSelf();
+
+        $this->assertEquals($myClass, $myClass->retornaEleMesmo());
     }
 }
 
+/*
+
+    testAddMethods = Teste para ver se os métodos são adicionados com assertTrue e method_exists. O addMethods não está funcionando na versão do phpunit que estou usando.
+
+    testSetConstructorArgs = Teste para ver se os arguentos do construtor do mock são corretamente setados com setConstructorArgs.
+
+    testSetMockClassName = Teste para ver se o nome do mock é corretamente setado com setMockClassName.
+
+    testDisableOriginalConstructor = Teste para ver se o construtor do mock é devidamente desativado com disableOriginalConstructor.
+
+    testDisableOriginalClone = Teste para ver se o clone do mock é devidamente desativado disableOriginalClone.
+
+    testDisableAutoload = Teste para ver se o autoload do mock é devidamente desativado com ->disableAutoload(), o autoload atualmente está obsoleto na versão de phpunit que estou usando.
+
+    testMethodWillReturn = Teste para ver se os método irão retornar o valor esperado com willReturn.
+
+    testMethodReturnSelf = Teste para ver se o método irá retornar o próprio objeto com willReturnSelf.
+
+*/
 
 
 <?php 
 
 namespace src;
 
-use Exception;
-
-class BancoDeDados
+class MyClass
 {
-    private static $conn;
-    public function puxarNotas(int $id): array
+    public int $api;
+    public int $api2;
+
+    public function __construct(int $api=0, int $api2=0)
+    {
+        $this->api = $api;
+        $this->api2 = $api2;
+    }
+
+    public function somar(int $api, int $api2): int|float|string
     {
         try 
         {
-            $comando_sql = "SELECT notas FROM alunos WHERE id = $1";
-            $resultado   = pg_query_params(self::$conn, $comando_sql, (array) $id);
-
-            return pg_fetch_assoc($resultado);
-
+            if (!is_numeric($api) || !is_numeric($api2))
+            {
+               throw new \Exception('Apenas números são permitidos');
+           }
+   
+           if (is_string($api) || is_string($api2)) {
+               throw new \Exception('Apenas números são permitidos');
+           }
+   
+           if (is_float($api) || is_float($api2)) {
+               return floatval(number_format($api + $api2, 2));
+           }
+   
+           return $api + $api2;
         } 
-        catch (Exception $e) 
+        catch (\Exception $e) 
         {
-            echo "Não foi possível retornar as notas desse aluno do banco: " . $e->getMessage();
-        }        
-
+            return $e->getMessage();
+        }
     }
-}
 
+    public function subtrair($api, $api2) : int|float|string
+    {
+        try
+        {
+            if (!is_numeric($api) || !is_numeric($api2))
+            {
+               throw new \Exception('Apenas números são permitidos');
+           }
+   
+           if (is_string($api) || is_string($api2)) {
+               throw new \Exception('Apenas números são permitidos');
+           }
+   
+           if (is_float($api) || is_float($api2)) {
+               return floatval(number_format($api - $api2, 2));
+           }
+   
+           return $api - $api2;
+        }
+        catch (\Exception $e)
+        {
+            return $e->getMessage();
+        }
+    }
 
+    public function retornaEleMesmo()
+    {
+        return $this;
+    }
 
+    public function getApi(): int
+    {
+        return $this->api;
+    }
 
+    public function getApi2(): int
+    {
+        return $this->api2;
+    }
 
+} 

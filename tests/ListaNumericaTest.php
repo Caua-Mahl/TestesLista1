@@ -12,7 +12,7 @@ class ListaNumericaTest extends TestCase
         $this->assertSame(10,         ListaNumerica::somarElementos([1, 4, 5]),          'Somando errado positivos');
         $this->assertSame(10,         ListaNumerica::somarElementos([1, 4, 0, 5]),       'Somando errado com 0 dentro da array');
         $this->assertSame(-10,        ListaNumerica::somarElementos([-1, -4, -5]),       'Somando errado negativos');
-        $this->assertSame(0,          ListaNumerica::somarElementos([5, 0, -5]),         'Somando errado negativos com positivos');
+        $this->assertSame(0,          ListaNumerica::somarElementos([5, 0, -5]),         'Somando errado negativos com positivos e 0'); //faz o mesmo q os 3 juntos
         $this->assertSame(0,          ListaNumerica::somarElementos([0, 0, 0]),          'Somando errado array de zeros');
         $this->assertSame(0,          ListaNumerica::somarElementos([]),                 'Somando errado com lista vazia');
         $this->assertSame(0,          ListaNumerica::somarElementos([1.1, -1.1]),        'Somando errado para números float'); 

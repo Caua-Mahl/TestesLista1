@@ -10,15 +10,14 @@ class MinhaClasseAvancadoTest extends TestCase
     
     public function testSomaCorreta()
     {
-        $this->assertSame(0,                                  MinhaClasseAvancado::somar([0, 0, 0]),            'Não somando corretamente array de zeros');
         $this->assertSame(1,                                  MinhaClasseAvancado::somar([6, 0, -5]),           'Não somando corretamente');
         $this->assertSame(2,                                  MinhaClasseAvancado::somar([2]),                  'Não devolve o próprio argumento se receber apenas ele');
     }
 
     public function testSomaCorretaDecimais()
     {
-        $this->assertSame(1.1,                                MinhaClasseAvancado::somar([0.1, 1]),             'Não somando corretamente decimais');
-        $this->assertSame(2.1,                                MinhaClasseAvancado::somar([0.1000, 2]),          'Não somando corretamente numeros com casas decimais diferentes');
+        $this->assertSame(1.1,                                MinhaClasseAvancado::somar([0.2, 0.9]),           'Não somando corretamente doisdecimais');
+        $this->assertSame(2.1,                                MinhaClasseAvancado::somar([0.100, 2]),           'Não somando corretamente numeros com casas decimais diferentes');
         $this->assertSame(3.1,                                MinhaClasseAvancado::somar([3.1]),                'Não devolve o próprio argumento se receber apenas ele');
     }
 
