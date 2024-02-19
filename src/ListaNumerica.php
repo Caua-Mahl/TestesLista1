@@ -11,7 +11,8 @@ class ListaNumerica
 
     public static function encontrarMaiorElemento(array $array): int|bool
     {
-        if (empty($array)) {
+        if (empty($array))
+        {
             return False;
         }
 
@@ -20,7 +21,8 @@ class ListaNumerica
 
     public static function encontrarMenorElemento(array $array): int|bool
     {
-        if (empty($array)) {
+        if (empty($array)) 
+        {
             return False;
         }
 
@@ -29,7 +31,8 @@ class ListaNumerica
 
     public static function ordenarLista(array $array): array
     {
-        if (empty($array)) {
+        if (empty($array)) 
+        {
             return [];
         }
 

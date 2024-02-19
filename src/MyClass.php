@@ -1,19 +1,20 @@
 <?php 
 
 namespace src;
-use src\BancoDeDados;
-require_once "src/ClassesMock/BancoDeDados.php";
+
+use BancoDeDados\BancoDeDados;
+
+require_once "BancoDeDados/BancoDeDados.php";
 
 class MyClass
 {
     public object $bancoDeDados;
-    public int $id;
-    public string $autoload;
+    public int    $id;
 
-   public function __construct(BancoDeDados $bancoDeDados,int $id)
+   public function __construct(BancoDeDados $bancoDeDados, int $id)
    {
         $this->bancoDeDados = $bancoDeDados;
-        $this->id = $id;
+        $this->id           = $id;
    }
 
    public function passarDeAno()
@@ -31,5 +32,10 @@ class MyClass
     public function __clone()
     {
         $this->id = 2;
+    }
+
+    public function __autoload()
+    {
+        return "Autoload";
     }
 } 
